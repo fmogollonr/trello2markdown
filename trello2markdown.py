@@ -13,11 +13,6 @@ try:
 except OSError as error:
     print(error)   
 
-def get_extension(filename):
-    ''' Get the extension of a file '''
-    return os.path.splitext(filename)[1]
-
-
 # get boards
 boards_url="https://api.trello.com/1/members/me/boards/?key="+key+"&token="+token
 r=requests.get(boards_url)
