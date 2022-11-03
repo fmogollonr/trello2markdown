@@ -17,64 +17,6 @@ def get_extension(filename):
     ''' Get the extension of a file '''
     return os.path.splitext(filename)[1]
 
-def get_name(tokenize, real_name, backup_name, element_id):
-    ''' Get back the name for the tokenize mode or the real name in the card.
-        If there is an ID, keep it
-    '''
-    name = backup_name if tokenize else sanitize_file_name(real_name)
-    return '{}_{}'.format(element_id, name)
-
-def sanitize_file_name(name):
-    ''' Stip problematic characters for a file name '''
-    return re.sub(r'[<>:\/\|\?\*\']', '_', name)[:100000000000000]
-
-
-def download_attachments(c, max_size, tokenize=False):
-    ''' Download the attachments for the card <c> '''
-    # Only download attachments below the size limit
-    attachments = [a for a in c['attachments']
-                   if a['bytes'] is not None and
-                   (a['bytes'] < max_size or max_size == -1)]
-
-    if len(attachments) > 0:
-        # Enter attachments directory
-        os.mkdir('attachments')
-        os.chdir('attachments')
-
-        # Download attachments
-        for id_attachment, attachment in enumerate(attachments):
-            extension = get_extension(attachment["name"])
-            # Keep the size in bytes to backup modifications in the file
-            backup_name = '{}_{}{}'.format(attachment['id'],
-                                           attachment['bytes'],
-                                           extension)
-            attachment_name = get_name(tokenize, attachment["name"],
-                                       backup_name,
-                                       id_attachment)
-
-            # We check if the file already exists, if it is the case we skip it
-            if os.path.isfile(attachment_name):
-                print('Attachment', attachment_name, 'exists already.')
-                continue
-
-            print('Saving attachment', attachment_name)
-            try:
-                print(attachment['url'])
-                content = requests.get(attachment['url'],
-                                       stream=True,
-                                       timeout=30)
-                print(content.request.headers)
-            except Exception:
-                sys.stderr.write('Failed download: {}'.format(attachment_name))
-                continue
-
-            with open(attachment_name, 'wb') as f:
-                for chunk in content.iter_content(chunk_size=1024):
-                    if chunk:
-                        f.write(chunk)
-
-        # Exit attachments directory
-        os.chdir('..')
 
 # get boards
 boards_url="https://api.trello.com/1/members/me/boards/?key="+key+"&token="+token
@@ -141,7 +83,6 @@ for answer in answers:
                         #print(action['memberCreator']['fullName']+"\n")
 
             if len(card['attachments']) > 0:
-                #download_attachments(card,10000000000000000)
                 #print("adjuntos")
                 adjuntos_folder = os.path.join(path,"adjuntos")
                 try:
@@ -154,9 +95,6 @@ for answer in answers:
                 #print(parsed)
                 for adjunto in parsed:
                     print(adjunto['url'])
-                    #descarga = requests.get(adjunto['url']+"?key="+key+"&token="+token)
-                    #print(adjunto['url'])
-                    #print(adjunto)
                     url="https://api.trello.com/1/cards/"+card['id']+"/attachments/"+adjunto['id']+"?key="+key+"&token="+token
                     #print(url)
                     url=re.sub("trello.com","api.trello.com",adjunto['url'])
