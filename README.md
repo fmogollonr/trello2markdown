@@ -6,6 +6,8 @@ This script will download all your trello boards, lists and cards, archived or n
 		* card title as heading1
 			* Description as inside text
 			* Comments as heading2 with author and date
+			* tags as heading2
+			* members as heading2
 	* Attachments in attachements folder
 		* Attachments treated as image + link as default
 
