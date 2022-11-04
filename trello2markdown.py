@@ -4,9 +4,11 @@ import re
 import urllib.request
 import json
 import sys
-import config
 
 
+parent_dir=sys.argv[1]
+key=sys.argv[2]
+token=sys.argv[3]
 path = os.path.join(parent_dir, "trello_backup")
 try:
     os.mkdir(path)
