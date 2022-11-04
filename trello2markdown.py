@@ -51,6 +51,13 @@ def get_board (answers,archived=False):
                     f.write('\n## Etiquetas\n')
                 for etiqueta in card['labels']:
                     f.write("* "+etiqueta['name']+"\n")
+                member_request=requests.get("https://api.trello.com/1/cards/"+card['id']+"/members",headers=myheaders)
+                member_content=json.loads(member_request.content.decode('utf-8'))
+                if len(member_content) > 0:
+                    f.write('\n## Members\n')
+                for member in member_content:
+                    #print(member['username'])
+                    f.write("* "+member['username']+"\n")
                 actions_url="https://api.trello.com/1/cards/"+card['id']+"/actions"
                 actions_request=requests.get(actions_url,headers=myheaders)
                 actions=parsed = json.loads(actions_request.content)
@@ -97,7 +104,7 @@ except OSError as error:
 
 myheaders = { 'Authorization': 'OAuth oauth_consumer_key="'+key+'", oauth_token="'+token+'"' }
 
-#?filter=closed
+
 # get boards
 boards_url="https://api.trello.com/1/members/me/boards/"
 r=requests.get(boards_url, headers=myheaders)
@@ -194,9 +201,8 @@ for answer in answers:
                     output_file_adjunto=os.path.join(adjuntos_folder, adjunto_nombre)
                     print('Saving attachment', adjunto_nombre)
                     try:
-                        adjunto="https://trello.com/1/cards/5ed6014fc9c47f17c4f131b1/attachments/5ee1e4131ce0582890e15ab5/download/TELIT_ongoing.png"
                         content = requests.get(url2,stream=True,timeout=60)
-                        print(content.request.headers)
+                        #print(content.request.headers)
                     except Exception:
                         print("Error descargando")
                         continue
@@ -207,4 +213,3 @@ for answer in answers:
                                 f.write(chunk)                    
             
             f.close()
-
