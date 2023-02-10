@@ -1,0 +1,15 @@
+name: Deploy 5GMETA infrastructure and test it
+on: [push]
+jobs:
+  get-repo:
+    runs-on: ubuntu-latest
+    #runs-on: self-hosted
+    steps:
+
+    - name: Get current repository
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.SECRETTOKEN }}
+        path: ${{ github.workspace }}/trello2markdown
+        ref: 'master'
+
