@@ -12,4 +12,9 @@ jobs:
         token: ${{ secrets.SECRETTOKEN }}
         path: ${{ github.workspace }}/trello2markdown
         ref: 'master'
+    - name : Backup Trello stuff
+      run: |
+        mkdir ${{ github.workspace }}/trello_backup
+        python3 ${{ github.workspace }}/trello2markdown/trello2markdown.py ${{ github.workspace }}/trello_backup  ${{ secrets.KEY }} ${{ secrets.TOKEN }}
+      
 
