@@ -5,12 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     #runs-on: self-hosted
     steps:
-
     - name: Get current repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ${{ github.workspace }}/trello2markdown
-        ref: 'master'
+        ref: 'main'
     - name : Backup Trello stuff
       run: |
         mkdir ${{ github.workspace }}/trello_backup
