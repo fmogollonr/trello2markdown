@@ -1,4 +1,4 @@
-name: Deploy 5GMETA infrastructure and test it
+name: Clone 
 on: [push]
 jobs:
   get-repo:
