@@ -82,8 +82,6 @@ def get_board (answers,archived=False):
                         adjunto_name= adjunto['url'].split("/")
                         adjunto_nombre=re.sub('[^a-zA-Z0-9\.]','_', adjunto_name[len(adjunto_name)-1])
                         output_file_adjunto=os.path.join(adjuntos_folder, adjunto_name[len(adjunto_name)-1])
-                        open(output_file_adjunto, "wb").write(descarga.content)
-
                         try:
                             open(output_file_adjunto, "wb").write(descarga.content)
                             f.write("\n## Adjuntos \n")
