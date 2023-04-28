@@ -21,6 +21,7 @@ def get_board (answers,archived=False):
         try:
             os.mkdir(output_folder)
         except OSError as error:
+            print("Cannot mkdir "+output_folder)
             print(error)
         list_url="https://api.trello.com/1/boards/"+answer['id']+"/lists"
         if archived == True:
@@ -38,7 +39,7 @@ def get_board (answers,archived=False):
             try:
                 os.remove(output_file)
             except:
-                print("doesnt exists") 
+                print("Cannot remove: doesnt exists "+output_file) 
 
             for card in sublists_list:
                 output_file=os.path.join(output_folder, answer_list['name']+".md")
@@ -72,6 +73,7 @@ def get_board (answers,archived=False):
                     try:
                         os.mkdir(adjuntos_folder)
                     except OSError as error:
+                        print("Cannot mkdir "+output_file)
                         print(error)
                     attach_request="https://api.trello.com/1/cards/"+card['id']+"/attachments/?fields=url"
                     adjunto_respuesta=requests.get(attach_request,headers=myheaders)
@@ -88,6 +90,7 @@ def get_board (answers,archived=False):
                             f.write("* !["+adjunto_name[len(adjunto_name)-1]+"](adjuntos/"+adjunto_name[len(adjunto_name)-1]+")\n")
 
                         except OSError as error:
+                            print("cannot write "+output_file_adjunto)
                             print(error)
                         print('Saving attachment', adjunto_name[len(adjunto_name)-1])
 
