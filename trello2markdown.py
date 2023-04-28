@@ -209,8 +209,7 @@ for answer in answers:
                             for chunk in content.iter_content(chunk_size=1024):
                                 if chunk:
                                     f.write(chunk)
-                        except Exception:
-                            print("Error descargando")
-                            continue
+                    except IOError:
+                        print("Error")
             
             f.close()
