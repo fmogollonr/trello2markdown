@@ -204,10 +204,13 @@ for answer in answers:
                     except Exception:
                         print("Error descargando")
                         continue
-                    
-                    with open(adjunto_nombre, 'wb') as f:
-                        for chunk in content.iter_content(chunk_size=1024):
-                            if chunk:
-                                f.write(chunk)                    
+                    try:
+                        with open(adjunto_nombre, 'wb') as f:
+                            for chunk in content.iter_content(chunk_size=1024):
+                                if chunk:
+                                    f.write(chunk)
+                        except Exception:
+                            print("Error descargando")
+                            continue
             
             f.close()
