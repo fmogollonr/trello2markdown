@@ -133,7 +133,8 @@ for answer in answers:
     #print(answer['name'])
     output_folder = os.path.join(path, answer["name"])
     try:
-        os.mkdir(output_folder)
+        if os.path.exists(output_folder) is False:
+            os.mkdir(output_folder)
     except OSError as error:
         print(error)
     list_url="https://api.trello.com/1/boards/"+answer['id']+"/lists?key="+key+"&token="+token
