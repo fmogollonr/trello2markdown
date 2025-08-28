@@ -61,7 +61,7 @@ def get_board (answers,archived=False):
                     try:
                         f.write("* "+member['username']+"\n")
                     except:
-                        print("Error with username "+str(username)+"\n)
+                        print("Error with username "+str(username)+"\n")
                 actions_url="https://api.trello.com/1/cards/"+card['id']+"/actions"
                 actions_request=requests.get(actions_url,headers=myheaders)
                 actions=parsed = json.loads(actions_request.content)
