@@ -42,6 +42,7 @@ def get_board (answers,archived=False):
                 print("Cannot remove: doesnt exists "+output_file) 
 
             for card in sublists_list:
+                print(card)
                 output_file=os.path.join(output_folder, answer_list['name']+".md")
                 if archived == True:
                     output_file=os.path.join(output_folder, answer_list['name']+"_archived.md")
