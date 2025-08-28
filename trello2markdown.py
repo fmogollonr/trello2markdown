@@ -66,14 +66,17 @@ def get_board (answers,archived=False):
                 actions_request=requests.get(actions_url,headers=myheaders)
                 actions=parsed = json.loads(actions_request.content)
                 for action in actions:
-                    if action['type'] == "commentCard":
-                        if action['data']['card']['id'] == card['id']:
-                            try:
-                                action['memberCreator']
-                                f.write('\n## Comentario el '+action['date']+' por '+action['memberCreator']['fullName']+'\n')
-                            except:
-                                f.write('\n## Comentario el '+action['date']+' por autor desconocido\n')
-                            f.write(action['data']['text']+'\n')
+                    try:
+                        if action['type'] == "commentCard":
+                            if action['data']['card']['id'] == card['id']:
+                                try:
+                                    action['memberCreator']
+                                    f.write('\n## Comentario el '+action['date']+' por '+action['memberCreator']['fullName']+'\n')
+                                except:
+                                    f.write('\n## Comentario el '+action['date']+' por autor desconocido\n')
+                                f.write(action['data']['text']+'\n')
+                    except:
+                        print("Error\n")
 
                 if len(card['attachments']) > 0:
                     adjuntos_folder = os.path.join(output_folder,"adjuntos")
