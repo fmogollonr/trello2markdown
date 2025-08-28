@@ -65,7 +65,8 @@ def get_board (answers,archived=False):
                 for action in actions:
                     if action['type'] == "commentCard":
                         if action['data']['card']['id'] == card['id']:
-                            try action['memberCreator']:
+                            try:
+                                action['memberCreator']
                                 f.write('\n## Comentario el '+action['date']+' por '+action['memberCreator']['fullName']+'\n')
                             except:
                                 f.write('\n## Comentario el '+action['date']+' por autor desconocido\n')
